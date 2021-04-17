@@ -5,10 +5,11 @@
       { 'w-12 h-12': large },
       { 'w-8 h-8': medium },
       { 'w-4 w-4': small },
+      'mx-auto',
     ]"
     :width="width"
     :height="height"
-    viewBox="0 0 24 24"
+    :viewBox="viewBox"
     :aria-labelledby="iconName"
     role="presentation"
   >
@@ -25,6 +26,8 @@ import { Component, Prop, Vue } from 'vue-property-decorator';
 export default class Icon extends Vue {
   @Prop({ type: Number, default: 24 }) private width?: number;
   @Prop({ type: Number, default: 24 }) private height?: number;
+
+  @Prop({ type: String, default: '0 0 24 24' }) private viewBox?: string;
 
   @Prop({ type: Boolean }) private large?: boolean;
   @Prop({ type: Boolean }) private medium?: boolean;

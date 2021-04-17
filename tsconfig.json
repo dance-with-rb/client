@@ -18,7 +18,8 @@
       "@/*": ["src/*"],
       "@atom/*": ["src/components/atom/*"],
       "@molecules/*": ["src/components/molecules/*"],
-      "@organisms/*": ["src/components/organisms/*"]
+      "@organisms/*": ["src/components/organisms/*"],
+      "@utils/*": ["src/utils/*"]
     },
     "lib": ["esnext", "dom", "dom.iterable", "scripthost"]
   },
