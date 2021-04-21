@@ -2,6 +2,12 @@
   <div class="home">
     <Header />
     <div id="map" class="w-full h-screen z-0 relative" />
+    <WeatherBox
+      class="z-10 absolute right-5 top-5"
+      location="서울시 종로구"
+      temperature="23"
+      fineDust="매우나쁨"
+    />
     <Button
       text="?"
       primary
@@ -15,9 +21,10 @@
 import { Component, Vue } from 'vue-property-decorator';
 
 import Header from '@organisms/Header';
+import WeatherBox from '@organisms/WeatherBox';
 import Button from '@atom/Button';
 
-@Component({ components: { Header, Button } })
+@Component({ components: { Header, WeatherBox, Button } })
 export default class Home extends Vue {
   mounted(): void {
     window?.kakao?.maps ? this.initialCreateMap() : this.injectScript();
