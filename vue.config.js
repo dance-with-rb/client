@@ -8,6 +8,7 @@ module.exports = {
         '@molecules': path.join(__dirname, 'src/components/molecules'),
         '@organisms': path.join(__dirname, 'src/components/organisms'),
         '@utils': path.join(__dirname, 'src/utils'),
+        '@config': path.join(__dirname, 'src/config'),
       },
     },
     devServer: {
