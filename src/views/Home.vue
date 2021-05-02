@@ -2,6 +2,13 @@
   <div class="home">
     <Header />
     <div id="map" class="w-full h-screen z-0 relative" />
+    <Modal
+      class="absolute left-0 top-0"
+      :isOpen="isApplicationInfoModalOpen"
+      :onClose="handleApplicationInfoModal"
+    >
+      <div>사이트 정보 기재 예정</div>
+    </Modal>
     <WeatherBox
       class="z-10 absolute right-5 top-5"
       location="서울시 종로구"
@@ -13,6 +20,7 @@
       primary
       onlyIcon
       class="z-10 absolute right-5 bottom-5 text-xl"
+      :onClick="handleApplicationInfoModal"
     />
   </div>
 </template>
@@ -22,6 +30,7 @@ import { Component, Vue } from 'vue-property-decorator';
 
 import Header from '@organisms/Header';
 import WeatherBox from '@organisms/WeatherBox';
+import Modal from '@organisms/Modal';
 import Button from '@atom/Button';
 
 import Http from '@utils/http';
@@ -39,7 +48,7 @@ interface Station {
   totalRackCount: number;
 }
 
-@Component({ components: { Header, WeatherBox, Button } })
+@Component({ components: { Header, WeatherBox, Modal, Button } })
 export default class Home extends Vue {
   mounted(): void {
     window?.kakao?.maps ? this.initialCreateMap() : this.injectScript();
@@ -47,6 +56,8 @@ export default class Home extends Vue {
   }
 
   private stations: Station[] | undefined;
+
+  private isApplicationInfoModalOpen = false;
 
   private injectScript(): void {
     if (typeof document !== 'undefined' && typeof window !== 'undefined') {
@@ -108,6 +119,10 @@ export default class Home extends Vue {
     );
 
     console.log(stationInfomation);
+  }
+
+  private handleApplicationInfoModal() {
+    this.isApplicationInfoModalOpen = !this.isApplicationInfoModalOpen;
   }
 }
 </script>
