@@ -35,5 +35,5 @@ Medium.args = {
 export const Small = Template.bind({});
 Small.args = {
   iconColor: 'lightgray',
-  Small: true,
+  small: true,
 };
