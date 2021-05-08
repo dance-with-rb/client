@@ -6,6 +6,7 @@
     :disabled="disabled"
     :class="[
       'input',
+      { 'input--danger': danger },
       { 'input--disabled': disabled },
       { 'input--large': large },
       { 'input--fluid': fluid },
@@ -16,6 +17,10 @@
 <style lang="postcss" scoped>
 .input {
   @apply px-4 py-3 border border-gray-300 rounded leading-normal shadow outline-none hover:border-green-300 focus:border-green-300 transition-colors duration-300;
+}
+
+.input--danger {
+  @apply border-red-400 hover:border-red-400;
 }
 
 .input--disabled {
@@ -39,6 +44,8 @@ export default class Input extends Vue {
 
   @Prop({ type: Boolean }) private large?: boolean;
   @Prop({ type: Boolean }) private fluid?: boolean;
+
+  @Prop({ type: Boolean }) private danger?: boolean;
 
   @Prop({ type: Boolean }) private disabled?: boolean;
 
