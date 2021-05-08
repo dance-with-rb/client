@@ -5,15 +5,31 @@
     :placeholder="placeholder"
     :disabled="disabled"
     :class="[
-      'px-4 py-3 border border-gray-300 rounded leading-normal shadow outline-none hover:border-green-300 focus:border-green-300 transition-colors duration-300',
-      { 'cursor-not-allowed hover:border-gray-300': disabled },
-      { 'w-96': large },
-      { 'w-full': fluid },
+      'input',
+      { 'input--disabled': disabled },
+      { 'input--large': large },
+      { 'input--fluid': fluid },
     ]"
     @input="handleInputChange"
   />
 </template>
+<style lang="postcss" scoped>
+.input {
+  @apply px-4 py-3 border border-gray-300 rounded leading-normal shadow outline-none hover:border-green-300 focus:border-green-300 transition-colors duration-300;
+}
 
+.input--disabled {
+  @apply cursor-not-allowed hover:border-gray-300;
+}
+
+.input--large {
+  @apply w-96;
+}
+
+.input--fluid {
+  @apply w-full;
+}
+</style>
 <script lang="ts">
 import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator';
 
