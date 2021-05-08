@@ -1,8 +1,6 @@
 <template>
-  <div name="weather-box" class="flex w-96 shadow">
-    <div
-      class="flex justify-center items-center bg-green-500 rounded-l h-full pl-3 pr-4 py-4 text-white font-bold text-lg"
-    >
+  <div name="weather-box" class="weather-box__wrapper">
+    <div class="weather-box__location">
       <Icon class="h-5 w-5 mr-1" viewBox="0 0 20 20">
         <path
           fill-rule="evenodd"
@@ -12,10 +10,8 @@
       </Icon>
       {{ location }}
     </div>
-    <div
-      class="bg-white flex rounded-r h-full p-4 text-gray-700 font-bold text-lg"
-    >
-      <div class="flex justify-center items-center mr-4">
+    <div class="weather-box__forecast">
+      <div class="weather-box__weather">
         <Icon class="h-6 w-6 mr-2" viewBox="0 0 20 20" iconColor="#3F3F46">
           <path
             fill-rule="evenodd"
@@ -25,7 +21,7 @@
         </Icon>
         {{ temperature }}°C
       </div>
-      <div class="flex justify-center items-center">
+      <div class="weather-box__fine-dust">
         <Icon class="h-6 w-6 mr-2" viewBox="0 0 20 20" iconColor="#3F3F46">
           <path
             fill-rule="evenodd"
@@ -38,6 +34,27 @@
     </div>
   </div>
 </template>
+<style lang="postcss" scoped>
+.weather-box__wrapper {
+  @apply flex w-96 shadow;
+}
+
+.weather-box__location {
+  @apply flex justify-center items-center bg-green-500 rounded-l h-full pl-3 pr-4 py-4 text-white font-bold text-lg;
+}
+
+.weather-box__forecast {
+  @apply bg-white flex rounded-r h-full p-4 text-gray-700 font-bold text-lg;
+}
+
+.weather-box__weather {
+  @apply flex justify-center items-center mr-4;
+}
+
+.weather-box__fine-dust {
+  @apply flex justify-center items-center;
+}
+</style>
 <script lang="ts">
 import { Component, Prop, Vue } from 'vue-property-decorator';
 
