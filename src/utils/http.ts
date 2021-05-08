@@ -21,7 +21,7 @@ http.interceptors.request.use(
 );
 
 http.interceptors.response.use(
-  (response: AxiosResponse<any>) => {
+  (response: AxiosResponse) => {
     return response;
   },
   (error: AxiosResponse<AxiosError>) => {

@@ -9,7 +9,7 @@ function setBackground(count: number): string {
   return 'bg-green-500';
 }
 
-export function draw(count: number, clickEvent: any): HTMLDivElement {
+export function draw(count: number, clickEvent: () => void): HTMLDivElement {
   const markerOuter = document.createElement('div');
   markerOuter.className = `rounded-full ${setBackground(
     count,
