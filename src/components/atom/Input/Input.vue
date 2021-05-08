@@ -1,7 +1,7 @@
 <template>
   <input
     type="text"
-    :v-model="value"
+    :value="value"
     :placeholder="placeholder"
     :disabled="disabled"
     :class="[
@@ -10,12 +10,12 @@
       { 'w-96': large },
       { 'w-full': fluid },
     ]"
-    @change="onChange()"
+    @input="handleInputChange"
   />
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop, Model } from 'vue-property-decorator';
+import { Component, Vue, Prop, Model, Emit } from 'vue-property-decorator';
 
 @Component
 export default class Input extends Vue {
@@ -26,8 +26,12 @@ export default class Input extends Vue {
 
   @Prop({ type: Boolean }) private disabled?: boolean;
 
-  @Prop({ type: Function }) private onChange?: () => void;
+  @Model('change', { type: String }) private value!: string;
 
-  @Model('change', { type: String }) private value?: string;
+  @Emit('change')
+  private handleInputChange(event: Event): string {
+    const { value } = event.target as HTMLInputElement;
+    return value;
+  }
 }
 </script>
