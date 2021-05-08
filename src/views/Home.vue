@@ -20,7 +20,7 @@
       primary
       onlyIcon
       class="z-10 absolute right-5 bottom-5 text-xl"
-      :onClick="handleApplicationInfoModal"
+      @click="handleApplicationInfoModal"
     />
   </div>
 </template>
