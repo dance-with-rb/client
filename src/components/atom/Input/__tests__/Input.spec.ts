@@ -10,6 +10,6 @@ describe('Input.vue', () => {
 
     await wrapper.vm.$nextTick();
 
-    expect(wrapper.emitted().test).toEqual(text);
+    expect(wrapper.emitted().test).toEqual([[text]]);
   });
 });
