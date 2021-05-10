@@ -101,11 +101,13 @@ export default class Login extends Vue {
   private password = '';
 
   private login(): void {
+    this.$store.commit('common/SET_LOADING_STATE');
+
     this.$validator.validateAll().then((isValid) => {
       if (isValid) {
         // TODO: 로그인 API 추가
       }
-
+      this.$store.commit('common/SET_LOADING_STATE');
       return;
     });
   }
