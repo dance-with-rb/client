@@ -20,7 +20,7 @@
       primary
       onlyIcon
       class="z-10 absolute right-5 bottom-5 text-xl"
-      @click="handleApplicationInfoModal"
+      :onClick="handleApplicationInfoModal"
     />
   </div>
 </template>
@@ -72,7 +72,7 @@ export default class Home extends Vue {
 
   private initialCreateMap(): void {
     if (typeof document !== 'undefined' && typeof window !== 'undefined') {
-      const mapContainer = document.getElementById('map');
+      const mapContainer = document.getElementById('map') as HTMLElement;
       const mapOptions = {
         center: new window.kakao.maps.LatLng(37.5532737, 126.91102795),
         level: 3,
@@ -84,13 +84,16 @@ export default class Home extends Vue {
         position: map.getCenter(),
       });
       const stationMarkers = this.stations?.map((station) => {
+        const {
+          id,
+          latitude,
+          longitude,
+          totalParkingBikeCount: count,
+        } = station;
         return {
-          id: station.id,
-          position: new window.kakao.maps.LatLng(
-            station.latitude,
-            station.longitude,
-          ),
-          count: station.totalParkingBikeCount,
+          id,
+          position: new window.kakao.maps.LatLng(latitude, longitude),
+          count,
         };
       });
 
