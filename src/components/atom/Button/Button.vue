@@ -9,6 +9,7 @@
       { 'button--only-icon': onlyIcon },
     ]"
     :disabled="disabled"
+    @click="onClick"
   >
     {{ text }}
   </button>
@@ -52,5 +53,7 @@ export default class Button extends Vue {
   @Prop({ type: Boolean }) private fluid?: boolean;
 
   @Prop({ type: Boolean }) private disabled?: boolean;
+
+  @Prop({ type: Function }) private onClick?: () => void;
 }
 </script>

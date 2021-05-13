@@ -16,39 +16,37 @@
         </Icon>
         <h1 class="login__title">따릉따릉따릉이 관리자</h1>
       </div>
-      <form @submit.prevent="login">
-        <div class="login__form-layout">
-          <div class="login__form-row">
-            <label>아이디</label>
-            <Input
-              type="text"
-              name="username"
-              large
-              v-model="username"
-              v-validate="'required'"
-              :danger="errors.has('username')"
-            />
-            <p class="error-message" v-if="errors.has('username')">
-              {{ errors.first('username') }}
-            </p>
-          </div>
-          <div class="login__form-row">
-            <label>비밀번호</label>
-            <Input
-              type="password"
-              name="password"
-              large
-              v-model="password"
-              v-validate="'required'"
-              :danger="errors.has('password')"
-            />
-            <p class="error-message" v-if="errors.has('password')">
-              {{ errors.first('password') }}
-            </p>
-          </div>
-          <Button type="submit" text="로그인" fluid primary />
+      <div class="login__form-layout">
+        <div class="login__form-row">
+          <label>아이디</label>
+          <Input
+            type="text"
+            name="username"
+            large
+            v-model="username"
+            v-validate="'required'"
+            :danger="errors.has('username')"
+          />
+          <p class="error-message" v-if="errors.has('username')">
+            {{ errors.first('username') }}
+          </p>
         </div>
-      </form>
+        <div class="login__form-row">
+          <label>비밀번호</label>
+          <Input
+            type="password"
+            name="password"
+            large
+            v-model="password"
+            v-validate="'required'"
+            :danger="errors.has('password')"
+          />
+          <p class="error-message" v-if="errors.has('password')">
+            {{ errors.first('password') }}
+          </p>
+        </div>
+        <Button type="button" text="로그인" fluid primary :onClick="login" />
+      </div>
       <div class="forgot-tooltip">
         <p>아이디/비밀번호를 잊어버리셨나요?</p>
       </div>
@@ -106,6 +104,7 @@ export default class Login extends Vue {
     this.$validator.validateAll().then((isValid) => {
       if (isValid) {
         // TODO: 로그인 API 추가
+        this.$router.replace({ path: '/admin' });
       }
       this.$store.commit('common/SET_LOADING_STATE');
       return;
