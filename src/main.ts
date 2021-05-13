@@ -8,6 +8,8 @@ import store from './store';
 
 import App from './App.vue';
 
+import 'nprogress/nprogress.css';
+
 import './index.css';
 
 Vue.config.productionTip = false;

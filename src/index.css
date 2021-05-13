@@ -5,3 +5,12 @@
 * {
   font-family: 'Spoqa Han Sans Neo', 'sans-serif';
 }
+
+#nprogress .bar {
+  background: #10b981;
+}
+
+#nprogress .spinner-icon {
+  border-top-color: #10b981;
+  border-left-color: #10b981;
+}

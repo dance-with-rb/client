@@ -54,6 +54,6 @@ export default class Button extends Vue {
 
   @Prop({ type: Boolean }) private disabled?: boolean;
 
-  @Prop({ type: Function }) private onClick!: () => void;
+  @Prop({ type: Function }) private onClick?: () => void;
 }
 </script>
