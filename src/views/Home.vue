@@ -40,20 +40,26 @@ import Urls from '@config/urls';
 
 interface Station {
   id: number;
-  latitude: number;
-  longitude: number;
-  name: string;
+  stationLatitude: number;
+  stationLongitude: number;
+  stationName: string;
   stationId: string;
-  totalParkingBikeCount: number;
-  totalRackCount: number;
+  parkingBikeTotCnt: number;
+  rackTotCnt: number;
 }
 
 @Component({ components: { Header, WeatherBox, Modal, Button } })
 export default class Home extends Vue {
   mounted(): void {
+    this.getCurrentLocation();
     window?.kakao?.maps ? this.initialCreateMap() : this.injectScript();
     this.getInitialStationMarkers();
   }
+
+  private latitude = 126.97842146838079;
+  private longitude = 37.56667257177269;
+
+  private dong = '';
 
   private stations: Station[] | undefined;
 
@@ -73,38 +79,43 @@ export default class Home extends Vue {
   private initialCreateMap(): void {
     if (typeof document !== 'undefined' && typeof window !== 'undefined') {
       const mapContainer = document.getElementById('map') as HTMLElement;
-      const mapOptions = {
-        center: new window.kakao.maps.LatLng(37.5532737, 126.91102795),
-        level: 3,
-      };
-
-      const map = new window.kakao.maps.Map(mapContainer, mapOptions);
-
-      const currentPositionMarker = new window.kakao.maps.Marker({
-        position: map.getCenter(),
-      });
-      const stationMarkers = this.stations?.map((station) => {
-        const {
-          id,
-          latitude,
-          longitude,
-          totalParkingBikeCount: count,
-        } = station;
-        return {
-          id,
-          position: new window.kakao.maps.LatLng(latitude, longitude),
-          count,
+      if (this.latitude !== 0 && this.longitude !== 0) {
+        const mapOptions = {
+          center: new window.kakao.maps.LatLng(this.latitude, this.longitude),
+          level: 3,
         };
-      });
 
-      stationMarkers?.forEach((marker) => {
-        const { id, count, position } = marker;
-        const content = draw(count, () => this.openStationModal(id));
+        const map = new window.kakao.maps.Map(mapContainer, mapOptions);
 
-        new window.kakao.maps.CustomOverlay({ map, position, content });
-      });
+        const currentPositionMarker = new window.kakao.maps.Marker({
+          position: map.getCenter(),
+        });
+        const stationMarkers = this.stations?.map((station) => {
+          const {
+            id,
+            stationLatitude,
+            stationLongitude,
+            parkingBikeTotCnt: count,
+          } = station;
+          return {
+            id,
+            position: new window.kakao.maps.LatLng(
+              stationLatitude,
+              stationLongitude,
+            ),
+            count,
+          };
+        });
 
-      currentPositionMarker.setMap(map);
+        stationMarkers?.forEach((marker) => {
+          const { id, count, position } = marker;
+          const content = draw(count, () => this.openStationModal(id));
+
+          new window.kakao.maps.CustomOverlay({ map, position, content });
+        });
+
+        currentPositionMarker.setMap(map);
+      }
     }
   }
 
@@ -121,11 +132,53 @@ export default class Home extends Vue {
       (station) => station.id === id,
     );
 
+    const callback = (result: [], status: 'ERROR' | 'OK' | 'ZERO_RESULT') => {
+      if (status === 'OK') {
+        console.log(result);
+      }
+    };
+
+    console.log(
+      new window.kakao.maps.services.Geocoder().coord2RegionCode(
+        126.9786567,
+        37.566825,
+        callback,
+      ),
+    );
+
     console.log(stationInfomation);
+  }
+
+  private getCurrentLocation(): void {
+    if ('geolocation' in navigator) {
+      navigator.geolocation.getCurrentPosition((position) => {
+        const { latitude, longitude } = position.coords;
+
+        this.latitude = latitude;
+        this.longitude = longitude;
+      });
+    }
   }
 
   private handleApplicationInfoModal() {
     this.isApplicationInfoModalOpen = !this.isApplicationInfoModalOpen;
+  }
+
+  private async getDong() {
+    const response = await Http.get(
+      'https://dapi.kakao.com/v2/local/geo/coord2regioncode.json',
+      {
+        params: {
+          x: this.latitude,
+          y: this.longitude,
+        },
+        headers: {
+          Authorization: `KakaoAK ${process.env.VUE_APP_KAKAOMAP_API_KEY}`,
+        },
+      },
+    );
+
+    console.log(response);
   }
 }
 </script>

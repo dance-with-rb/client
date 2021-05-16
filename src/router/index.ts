@@ -3,6 +3,8 @@ import VueRouter, { RouteConfig } from 'vue-router';
 
 import Nprogress from 'nprogress';
 
+Nprogress.configure({ parent: '#app' });
+
 Vue.use(VueRouter);
 
 const routes: RouteConfig[] = [
@@ -18,8 +20,15 @@ const routes: RouteConfig[] = [
   },
   {
     path: '/admin',
-    name: 'Dashboard',
-    component: () => import('../views/Dashboard.vue'),
+    name: '',
+    component: () => import('../views/admin/Index.vue'),
+    children: [
+      {
+        path: '/',
+        name: 'Admin.Index',
+        component: () => import('../views/admin/Dashboard.vue'),
+      },
+    ],
   },
 ];
 
@@ -29,10 +38,9 @@ const router = new VueRouter({
   routes,
 });
 
-Nprogress.configure({ parent: '#app' });
-
 router.beforeEach((to, from, next) => {
   Nprogress.start();
+
   next();
 });
 

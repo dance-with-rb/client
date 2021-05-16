@@ -1,6 +1,5 @@
 <template>
   <div id="app">
-    <NavigationBar v-if="isAdminPage" />
     <router-view />
     <Loading :isLoading="isLoading" />
   </div>
@@ -13,12 +12,6 @@ import NavigationBar from '@organisms/NavigationBar';
 
 @Component({ components: { Loading, NavigationBar } })
 export default class App extends Vue {
-  get isLoading(): boolean {
-    return this.$store.getters['common/getLoadingState'];
-  }
-
-  get isAdminPage(): boolean {
-    return this.$route.path.includes('/admin');
-  }
+  private isLoading = this.$store.getters['common/getLoadingState'];
 }
 </script>

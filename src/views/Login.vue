@@ -45,7 +45,14 @@
             {{ errors.first('password') }}
           </p>
         </div>
-        <Button type="button" text="로그인" fluid primary :onClick="login" />
+        <Button
+          type="button"
+          text="로그인"
+          fluid
+          primary
+          :onClick="login"
+          :disabled="isLoginable"
+        />
       </div>
       <div class="forgot-tooltip">
         <p>아이디/비밀번호를 잊어버리셨나요?</p>
@@ -89,6 +96,8 @@
 <script lang="ts">
 import { Component, Vue } from 'vue-property-decorator';
 
+import { UNAUTHORIZED } from '@utils/constants';
+
 import Input from '@atom/Input';
 import Button from '@atom/Button';
 import Icon from '@atom/Icon';
@@ -98,16 +107,31 @@ export default class Login extends Vue {
   private username = '';
   private password = '';
 
-  private login(): void {
-    this.$store.commit('common/SET_LOADING_STATE');
+  get isLoginable(): boolean {
+    if (this.username && this.password) {
+      return false;
+    }
 
+    return true;
+  }
+
+  private login(): void {
     this.$validator.validateAll().then((isValid) => {
       if (isValid) {
-        // TODO: 로그인 API 추가
-        this.$router.replace({ path: '/admin' });
+        this.$store
+          .dispatch('user/LOGIN', {
+            username: this.username,
+            password: this.password,
+          })
+          .then(() => {
+            this.$router.push({ path: '/admin' });
+          })
+          .catch(() => {
+            this.$toasted.error(UNAUTHORIZED, {
+              position: 'bottom-center',
+            });
+          });
       }
-      this.$store.commit('common/SET_LOADING_STATE');
-      return;
     });
   }
 }

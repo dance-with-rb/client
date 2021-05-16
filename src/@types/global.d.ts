@@ -1906,6 +1906,30 @@ declare namespace kakao.maps.services {
         output_coord?: Coords;
       },
     ): void;
+
+    /**
+     * 좌표 값에 해당하는 행정동, 법정동 정보를 얻는다.
+     *
+     * @param x x좌표, 경위도인 경우 longitude
+     * @param y y좌표, 경위도인 경우 latitude
+     * @param callback 검색 결과를 받을 콢백함수
+     * @param options
+     */
+    public coord2RegionCode(
+      x: number,
+      y: number,
+      callback: (
+        /**
+         * 변환된 좌표 결과
+         */
+        result: [],
+        /**
+         * 응답 코드
+         */
+        status: Status,
+      ) => void,
+      options?: { input_coord?: Coords; output_coord?: Coord },
+    ): void;
   }
 
   /**
