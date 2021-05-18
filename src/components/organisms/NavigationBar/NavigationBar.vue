@@ -17,12 +17,17 @@
     </div>
     <!-- TODO: custom directive 추가(handleClickOutside) -->
     <div class="navigation-bar__username-wrapper">
-      <p class="navigation-bar__username" @click="handleDropdownClick">
+      <p
+        class="navigation-bar__username"
+        @click="handleDropdownClick"
+        @blur="handleDropdownClickOutside"
+        tabindex="0"
+      >
         {{ username }}
       </p>
       <div class="navigation-bar__dropdown" v-show="isDropdownOpen">
         <ul>
-          <li>로그아웃</li>
+          <li @click="onLogout">로그아웃</li>
         </ul>
       </div>
     </div>
@@ -54,7 +59,7 @@
 }
 
 .navigation-bar__dropdown ul li {
-  @apply px-4 py-2 hover:bg-gray-100;
+  @apply px-4 py-2 hover:bg-gray-100 cursor-pointer;
 }
 </style>
 <script lang="ts">
@@ -71,6 +76,12 @@ export default class NavigationBar extends Vue {
 
   private handleDropdownClick() {
     this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  private handleDropdownClickOutside() {
+    setTimeout(() => {
+      this.isDropdownOpen = !this.isDropdownOpen;
+    }, 300);
   }
 }
 </script>

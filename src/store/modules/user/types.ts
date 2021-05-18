@@ -13,10 +13,12 @@ export interface UserRequest {
 
 export enum UserMutationTypes {
   SET_USER_ACCOUNT = 'SET_USER_ACCOUNT',
+  LOGOUT = 'LOGOUT',
 }
 
 export type Mutations<S = User> = {
   [UserMutationTypes.SET_USER_ACCOUNT](state: S, username: string): void;
+  [UserMutationTypes.LOGOUT](state: S): void;
 };
 
 export enum UserActionTypes {

@@ -1,4 +1,5 @@
 import Vue from 'vue';
+import store from '../store';
 import VueRouter, { RouteConfig } from 'vue-router';
 
 import Nprogress from 'nprogress';
@@ -22,6 +23,12 @@ const routes: RouteConfig[] = [
     path: '/admin',
     name: '',
     component: () => import('../views/admin/Index.vue'),
+    beforeEnter: (to, from, next) => {
+      if (store.getters['user/isLogined']) {
+        next();
+      }
+      next(false);
+    },
     children: [
       {
         path: '/',
