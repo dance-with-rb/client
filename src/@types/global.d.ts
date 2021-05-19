@@ -352,6 +352,9 @@ declare namespace kakao.maps {
      */
     constructor(latitude: number, longitude: number);
 
+    public La: number;
+    public Ma: number;
+
     /**
      * 위도를 반환한다.
      */
@@ -1781,7 +1784,7 @@ declare namespace kakao.maps.event {
    * @param handler 이벤트를 처리할 함수
    */
   export function addListener(
-    target: EventTarget,
+    target: kakao.maps.Map,
     type: string,
     handler: () => void,
   ): void;
@@ -1912,7 +1915,7 @@ declare namespace kakao.maps.services {
      *
      * @param x x좌표, 경위도인 경우 longitude
      * @param y y좌표, 경위도인 경우 latitude
-     * @param callback 검색 결과를 받을 콢백함수
+     * @param callback 검색 결과를 받을 콜백함수
      * @param options
      */
     public coord2RegionCode(
@@ -1929,6 +1932,21 @@ declare namespace kakao.maps.services {
         status: Status,
       ) => void,
       options?: { input_coord?: Coords; output_coord?: Coord },
+    ): void;
+
+    /**
+     * 좌표 값에 해당하는 구 조소와 도로명 주소 정보를 얻는다.
+     *
+     * @param x x좌표, 경위도인 경우 longitude
+     * @param y y좌표, 경위도인 경우 latitude
+     * @param callback 검색 결과를 받을 콜백함수
+     * @param options
+     */
+    public coord2Address(
+      x: number,
+      y: number,
+      callback: (result: [], status: Status) => void,
+      options?: { input_coord?: Coords },
     ): void;
   }
 

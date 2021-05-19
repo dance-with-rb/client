@@ -7,7 +7,7 @@
     role="dialog"
   >
     <div name="modal-wrapper" class="modal__wrapper">
-      <div name="modal" class="w-2/4 bg-white rounded p-5">
+      <div name="modal" class="w-600 bg-white rounded p-5">
         <div name="modal-header" class="flex justify-end">
           <span role="button" class="modal__close-button" @click="onClose()">
             &times;
@@ -30,7 +30,7 @@
 }
 
 .modal__body {
-  @apply py-3 flex justify-start;
+  @apply flex justify-start;
 }
 
 .modal__close-button {
