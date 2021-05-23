@@ -18,13 +18,27 @@
       :isOpen="isSelectedStationModalOpen"
       :onClose="handleSelectedStationModal"
     >
-      <div class="w-full">
-        <h1 class="text-2xl font-medium">
-          {{ selectedStationInfo.stationName }}
-        </h1>
-        <div class="flex items-center">
-          <i class="fas fa-map-marker-alt mr-1" />
-          <p class="my-1">{{ selectedStationAddress }}</p>
+      <div class="w-full pt-4">
+        <div class="flex justify-between items-center">
+          <div class="flex flex-col">
+            <h1 class="text-2xl font-medium">
+              {{ selectedStationInfo.stationName }}
+            </h1>
+            <div class="flex items-center">
+              <i class="fas fa-map-marker-alt mr-1" />
+              <p class="my-1">{{ selectedStationAddress }}</p>
+            </div>
+          </div>
+          <div class="flex">
+            <Button
+              onlyIcon
+              shareKakao
+              class="text-2xl"
+              :onClick="() => shareStationInfomation(selectedStationInfo)"
+            >
+              <i class="fas fa-comment" />
+            </Button>
+          </div>
         </div>
         <div class="mt-5 mb-6">
           <h2>
@@ -67,12 +81,13 @@
       v-show="canVisibleWeatherBox"
     />
     <Button
-      text="?"
       primary
       onlyIcon
       class="z-10 absolute right-5 bottom-5 text-3xl"
       :onClick="handleApplicationInfoModal"
-    />
+    >
+      <i class="fas fa-question" />
+    </Button>
   </div>
 </template>
 
@@ -184,7 +199,10 @@ export default class Home extends Vue {
 
   mounted(): void {
     this.getCurrentLocation();
+
+    // Set up kakao sdk(map, link)
     window?.kakao?.maps ? this.initialCreateMap() : this.injectScript();
+    new window.Kakao.init(process.env.VUE_APP_KAKAOMAP_API_KEY);
     this.getInitialStationMarkers();
   }
 
@@ -367,6 +385,27 @@ export default class Home extends Vue {
       this.precipitation = weather.precipitation;
       this.finedust = Finedust.convertFinedustLevel(fineDust);
     }
+  }
+
+  private shareStationInfomation(selectedStationInfo: Station): void {
+    const { stationName, parkingBikeTotCnt } = selectedStationInfo;
+    const address = this.address;
+
+    window?.Kakao?.Link?.sendDefault({
+      objectType: 'location',
+      address,
+      addressTitle: stationName,
+      content: {
+        title: stationName,
+        description: `현재 대여소에 ${parkingBikeTotCnt}대의 자전거가 있어요!`,
+        imageUrl:
+          'https://user-images.githubusercontent.com/61655667/119266386-92583c00-bc25-11eb-98ca-27a7d9871fab.png',
+        link: {
+          mobileWebUrl: 'https://developers.kakao.com',
+          webUrl: 'https://developers.kakao.com',
+        },
+      },
+    });
   }
 }
 </script>

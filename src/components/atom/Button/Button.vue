@@ -7,11 +7,13 @@
       { 'button--disabled': disabled },
       { 'button--fluid': fluid },
       { 'button--only-icon': onlyIcon },
+      { 'button--share-kakao': shareKakao },
     ]"
     :disabled="disabled"
     @click="onClick"
   >
     {{ text }}
+    <slot />
   </button>
 </template>
 <style lang="postcss" scoped>
@@ -35,6 +37,10 @@
   @apply rounded-full w-14 h-14 flex items-center justify-center;
 }
 
+.button--share-kakao {
+  @apply bg-yellow-300 hover:bg-yellow-400 focus:ring ring-yellow-100;
+}
+
 .button--disabled {
   @apply bg-gray-300 text-gray-400 hover:bg-gray-300 cursor-not-allowed ring-opacity-0;
 }
@@ -53,6 +59,8 @@ export default class Button extends Vue {
   @Prop({ type: Boolean }) private fluid?: boolean;
 
   @Prop({ type: Boolean }) private disabled?: boolean;
+
+  @Prop({ type: Boolean }) private shareKakao?: boolean;
 
   @Prop({ type: Function }) private onClick?: () => void;
 }
