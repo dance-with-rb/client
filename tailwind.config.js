@@ -6,10 +6,16 @@ module.exports = {
       width: {
         600: '600px',
       },
+      height: {
+        300: '300px',
+      },
     },
   },
   variants: {
-    extend: {},
+    extend: {
+      backgroundColor: ['checked'],
+      borderColor: ['checked'],
+    },
   },
   plugins: [],
 };
